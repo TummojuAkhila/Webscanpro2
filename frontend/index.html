@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebScanPro</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    h2 { color: #333; }
+    .section { margin-top: 20px; }
+    pre { background: #f4f4f4; padding: 10px; }
+    .high { color: red; }
+    .medium { color: orange; }
+    .low { color: green; }
+  </style>
+</head>
+<body>
+
+<h2>🔐 WebScanPro – Vulnerability Scanner</h2>
+
+<input id="url" placeholder="http://localhost:3000" size="40">
+<button onclick="runScan()">Scan</button>
+
+<div id="output"></div>
+
+<script>
+async function runScan() {
+  const url = document.getElementById("url").value;
+  document.getElementById("output").innerHTML = "Scanning...";
+
+  const res = await fetch("/scan", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({url})
+  });
+
+  const data = await res.json();
+
+  let html = `<h3>Results for ${data.target}</h3>`;
+
+  html += `<div class="section"><h4>SQL Injection</h4>
+           <pre>${JSON.stringify(data.sql_injection, null, 2)}</pre></div>`;
+
+  html += `<div class="section"><h4>XSS</h4>
+           <pre>${JSON.stringify(data.xss, null, 2)}</pre></div>`;
+
+  html += `<div class="section"><h4>Authentication & Session</h4>
+           <pre>${JSON.stringify(data.authentication, null, 2)}</pre></div>`;
+
+  html += `<div class="section"><h4>Access Control / IDOR</h4>
+           <pre>${JSON.stringify(data.access_control, null, 2)}</pre></div>`;
+
+  document.getElementById("output").innerHTML = html;
+}
+</script>
+
+</body>
+</html>

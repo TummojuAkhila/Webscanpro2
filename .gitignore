@@ -1,0 +1,36 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Outputs & logs
+output/
+audit_output/
+access_control_logs/
+reports/*.html
+reports/*.pdf
+
+# ML artifacts
+data/*.csv
+data/*.json
+models/*.pkl
+models/*.joblib
+
+# Environment variables
+.env
+.env.*
+
+# Editor & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
